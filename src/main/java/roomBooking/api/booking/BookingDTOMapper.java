@@ -10,15 +10,15 @@ public class BookingDTOMapper implements DTOMapper<Booking, BookingDTO> {
         BookingDTO bookingDTO = BookingDTO
                 .builder()
                 .clientName(from.getClient().getName() + " " + from.getClient().getLastName())
-                .propertyName(from.getProperty().getPropertyName())
-                .roomId(from.getRoom().getId())
-                .bookingFrom(from.getBookingFrom())
-                .bookingTo(from.getBookingTo())
-                .bookingDays(from.getBookingDays())
-                .bookingCost(from.getBookingCost())
+                .propertyName(from.getRoom().getProperty().getPropertyName())
+                .roomId(from.getRoom().getId().toString())
+                .bookingFrom(from.getBookingFrom().toString())
+                .bookingTo(from.getBookingTo().toString())
+                .bookingDays(String.valueOf(from.getBookingDays()))
+                .bookingCost(from.getBookingCost().toString())
                 .currency(from.getCurrency().name())
                 .paymentMethod((from.getPaymentMethod().name()))
-                .bookingDate(from.getBookingDate())
+                .bookingDate(from.getBookingDate().toString())
                 .build();
         return bookingDTO;
     }

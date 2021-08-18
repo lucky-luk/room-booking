@@ -4,6 +4,7 @@ public enum Currency {
 
     PLN("PLN"),
     EUR("EUR"),
+    GBP("GBP"),
     USD("USD");
 
     private String displayName;

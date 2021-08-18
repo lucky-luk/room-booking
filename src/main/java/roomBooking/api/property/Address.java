@@ -2,6 +2,7 @@ package roomBooking.api.property;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "property_addresses")
@@ -11,10 +12,6 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
 
     @Column(name = "country", nullable = false)
     private String country;
@@ -37,14 +34,6 @@ public class Address {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Property getProperty() {
-        return property;
-    }
-
-    public void setProperty(Property property) {
-        this.property = property;
     }
 
     public String getCountry() {
@@ -91,7 +80,6 @@ public class Address {
     public String toString() {
         return "Address{" +
                 "id=" + id +
-                ", property=" + property +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", postalCode='" + postalCode + '\'' +
@@ -105,11 +93,17 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(id, address.id) && Objects.equals(property, address.property) && Objects.equals(country, address.country) && Objects.equals(city, address.city) && Objects.equals(postalCode, address.postalCode) && Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber);
+        return Objects.equals(id, address.id) && Objects.equals(country, address.country)
+                && Objects.equals(city, address.city) && Objects.equals(postalCode, address.postalCode)
+                && Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, property, country, city, postalCode, street, houseNumber);
+        return Objects.hash(id, country, city, postalCode, street, houseNumber);
+    }
+
+    public boolean isAnyAddressFieldNull() {
+        return Stream.of(country, city, postalCode, street, houseNumber).anyMatch(Objects::isNull);
     }
 }

@@ -2,39 +2,34 @@ package roomBooking.api.property;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
-
 public class RoomDTO {
 
     @JsonProperty("property_name")
     private String property;
 
     @JsonProperty(value = "price_per_night")
-    private BigDecimal pricePerNight;
+    private String pricePerNight;
 
     @JsonProperty(value = "currency")
     private String currency;
 
     @JsonProperty(value = "sleeping_places")
-    private int sleepingPlaces;
+    private String sleepingPlaces;
 
     @JsonProperty(value = "sinle_bed")
-    private boolean singleBed;
+    private String singleBed;
 
     @JsonProperty(value = "double_bed")
-    private boolean doubleBed;
+    private String doubleBed;
 
     @JsonProperty(value = "tv_in_room")
-    private boolean tvInRoom;
+    private String tvInRoom;
 
     @JsonProperty(value = "private_kitche")
-    private boolean privateKitchen;
+    private String privateKitchen;
 
     @JsonProperty(value = "wifi")
-    private boolean wifi;
-
-    @JsonProperty(value = "is_available")
-    private Boolean isAvailable;
+    private String wifi;
 
     public RoomDTO(RoomDTOBuilder b) {
         this.property = b.property;
@@ -46,7 +41,6 @@ public class RoomDTO {
         this.tvInRoom = b.tvInRoom;
         this.privateKitchen = b.privateKitchen;
         this.wifi = b.wifi;
-        this.isAvailable = b.isAvailable;
     }
 
     public static RoomDTOBuilder builder() {
@@ -55,22 +49,21 @@ public class RoomDTO {
 
     public static class RoomDTOBuilder {
         private String property;
-        private BigDecimal pricePerNight;
+        private String pricePerNight;
         private String currency;
-        private int sleepingPlaces;
-        private boolean singleBed;
-        private boolean doubleBed;
-        private boolean tvInRoom;
-        private boolean privateKitchen;
-        private boolean wifi;
-        private Boolean isAvailable;
+        private String sleepingPlaces;
+        private String singleBed;
+        private String doubleBed;
+        private String tvInRoom;
+        private String privateKitchen;
+        private String wifi;
 
         public RoomDTOBuilder property(String property) {
             this.property = property;
             return this;
         }
 
-        public RoomDTOBuilder pricePerNight(BigDecimal pricePerNight) {
+        public RoomDTOBuilder pricePerNight(String pricePerNight) {
             this.pricePerNight = pricePerNight;
             return this;
         }
@@ -80,38 +73,33 @@ public class RoomDTO {
             return this;
         }
 
-        public RoomDTOBuilder sleepingPlaces(int sleepingPlaces) {
+        public RoomDTOBuilder sleepingPlaces(String sleepingPlaces) {
             this.sleepingPlaces = sleepingPlaces;
             return this;
         }
 
-        public RoomDTOBuilder singleBed(boolean singleBed) {
+        public RoomDTOBuilder singleBed(String singleBed) {
             this.singleBed = singleBed;
             return this;
         }
 
-        public RoomDTOBuilder doubleBed(boolean doubleBed) {
+        public RoomDTOBuilder doubleBed(String doubleBed) {
             this.doubleBed = doubleBed;
             return this;
         }
 
-        public RoomDTOBuilder tvInRoom(boolean tvInRoom) {
+        public RoomDTOBuilder tvInRoom(String tvInRoom) {
             this.tvInRoom = tvInRoom;
             return this;
         }
 
-        public RoomDTOBuilder privateKitchen(boolean privateKitchen) {
+        public RoomDTOBuilder privateKitchen(String privateKitchen) {
             this.privateKitchen = privateKitchen;
             return this;
         }
 
-        public RoomDTOBuilder wifi(boolean wifi) {
+        public RoomDTOBuilder wifi(String wifi) {
             this.wifi = wifi;
-            return this;
-        }
-
-        public RoomDTOBuilder isAvailable(boolean isAvailable) {
-            this.isAvailable = isAvailable;
             return this;
         }
 
@@ -124,7 +112,7 @@ public class RoomDTO {
         return property;
     }
 
-    public BigDecimal getPricePerNight() {
+    public String getPricePerNight() {
         return pricePerNight;
     }
 
@@ -132,32 +120,28 @@ public class RoomDTO {
         return currency;
     }
 
-    public int getSleepingPlaces() {
+    public String getSleepingPlaces() {
         return sleepingPlaces;
     }
 
-    public boolean isSingleBed() {
+    public String isSingleBed() {
         return singleBed;
     }
 
-    public boolean isDoubleBed() {
+    public String isDoubleBed() {
         return doubleBed;
     }
 
-    public boolean isTvInRoom() {
+    public String isTvInRoom() {
         return tvInRoom;
     }
 
-    public boolean isPrivateKitchen() {
+    public String isPrivateKitchen() {
         return privateKitchen;
     }
 
-    public boolean isWifi() {
+    public String isWifi() {
         return wifi;
-    }
-
-    public Boolean getAvailable() {
-        return isAvailable;
     }
 
     @Override
@@ -172,7 +156,6 @@ public class RoomDTO {
                 ", tvInRoom=" + tvInRoom +
                 ", privateKitchen=" + privateKitchen +
                 ", wifi=" + wifi +
-                ", isAvailable=" + isAvailable +
                 '}';
     }
 }

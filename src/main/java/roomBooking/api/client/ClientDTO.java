@@ -3,7 +3,6 @@ package roomBooking.api.client;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import roomBooking.api.booking.BookingDTO;
 
-import java.util.Date;
 import java.util.List;
 
 public class ClientDTO {
@@ -24,7 +23,7 @@ public class ClientDTO {
     private String nationality;
 
     @JsonProperty(value = "registration_date")
-    private Date registrationDate;
+    private String registrationDate;
 
     @JsonProperty(value = "bookings")
     private List<BookingDTO> bookings;
@@ -49,7 +48,7 @@ public class ClientDTO {
         private String email;
         private String phoneNumber;
         private String nationality;
-        private Date registrationDate;
+        private String registrationDate;
         private List<BookingDTO> bookings;
 
         public ClientDTOBuilder name(String name) {
@@ -77,7 +76,7 @@ public class ClientDTO {
             return this;
         }
 
-        public ClientDTOBuilder registrationDate(Date registrationDate) {
+        public ClientDTOBuilder registrationDate(String registrationDate) {
             this.registrationDate = registrationDate;
             return this;
         }
@@ -112,7 +111,7 @@ public class ClientDTO {
         return nationality;
     }
 
-    public Date getRegistrationDate() {
+    public String getRegistrationDate() {
         return registrationDate;
     }
 

@@ -1,5 +1,6 @@
 package roomBooking.api.property;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import roomBooking.api.comment.Comment;
 import roomBooking.api.host.Host;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "properties")
@@ -27,11 +29,12 @@ public class Property {
     @Column(name = "number_of_rooms", nullable = false)
     private int numberOfRooms;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "host_id", nullable = false)
     private Host host;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address")
     private Address address;
 
@@ -50,9 +53,11 @@ public class Property {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "property")
     private List<Room> rooms = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "property")
     private List<Comment> comments = new ArrayList<>();
 
@@ -184,11 +189,23 @@ public class Property {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Property property = (Property) o;
-        return numberOfRooms == property.numberOfRooms && parkingAvailable == property.parkingAvailable && restaurantAvailable == property.restaurantAvailable && swimmingPoolAvailable == property.swimmingPoolAvailable && petsAllowed == property.petsAllowed && Objects.equals(id, property.id) && Objects.equals(propertyName, property.propertyName) && propertyType == property.propertyType && Objects.equals(host, property.host) && Objects.equals(address, property.address) && Objects.equals(description, property.description) && Objects.equals(rooms, property.rooms) && Objects.equals(comments, property.comments);
+        return numberOfRooms == property.numberOfRooms && parkingAvailable == property.parkingAvailable
+                && restaurantAvailable == property.restaurantAvailable
+                && swimmingPoolAvailable == property.swimmingPoolAvailable && petsAllowed == property.petsAllowed
+                && Objects.equals(id, property.id) && Objects.equals(propertyName, property.propertyName)
+                && propertyType == property.propertyType && Objects.equals(host, property.host)
+                && Objects.equals(address, property.address) && Objects.equals(description, property.description)
+                && Objects.equals(rooms, property.rooms) && Objects.equals(comments, property.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, propertyName, propertyType, numberOfRooms, host, address, parkingAvailable, restaurantAvailable, swimmingPoolAvailable, petsAllowed, description, rooms, comments);
+        return Objects.hash(id, propertyName, propertyType, numberOfRooms, host, address, parkingAvailable,
+                restaurantAvailable, swimmingPoolAvailable, petsAllowed, description, rooms, comments);
+    }
+
+    public boolean isAnyPropertyFieldNull() {
+        return Stream.of(propertyName, propertyType, numberOfRooms, parkingAvailable,
+                restaurantAvailable, swimmingPoolAvailable, petsAllowed).anyMatch(Objects::isNull);
     }
 }

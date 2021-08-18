@@ -1,11 +1,13 @@
 package roomBooking.api.comment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import roomBooking.api.client.Client;
 import roomBooking.api.property.Property;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "client_comments")
@@ -16,21 +18,24 @@ public class Comment {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", nullable = false)
     private Client author;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "rating")
+    @Column(name = "rating", nullable = false)
     private int rating;
 
-    @Column(name = "creation_date", nullable = false)
+    @JsonIgnore
+    @Column(name = "creation_date")
     private Date creationDate;
 
     public Long getId() {
@@ -98,11 +103,17 @@ public class Comment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return rating == comment.rating && Objects.equals(id, comment.id) && Objects.equals(author, comment.author) && Objects.equals(property, comment.property) && Objects.equals(content, comment.content) && Objects.equals(creationDate, comment.creationDate);
+        return rating == comment.rating && Objects.equals(id, comment.id) && Objects.equals(author, comment.author)
+                && Objects.equals(property, comment.property) && Objects.equals(content, comment.content)
+                && Objects.equals(creationDate, comment.creationDate);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, author, property, content, rating, creationDate);
+    }
+
+    public boolean isAnyCommentFieldNull() {
+        return Stream.of(content, rating).anyMatch(Objects::isNull);
     }
 }

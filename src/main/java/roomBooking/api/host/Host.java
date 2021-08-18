@@ -1,12 +1,14 @@
 package roomBooking.api.host;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import roomBooking.api.property.Property;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "hosts")
@@ -20,10 +22,10 @@ public class Host {
     @Column(name = "company_name", nullable = false)
     private String companyName;
 
-    @Column(name = "nip_number", length = 10)
+    @Column(name = "nip_number", unique = true, length = 10)
     private String nipNumber;
 
-    @Column(name = "regon_number", length = 9)
+    @Column(name = "regon_number", unique = true, length = 9)
     private String regonNumber;
 
     @Column(name = "email", nullable = false, unique = true)
@@ -32,9 +34,11 @@ public class Host {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
+    @JsonIgnore
     @Column(name = "registration_date")
     private Date registrationDate;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "host")
     private List<Property> properties = new ArrayList<>();
 
@@ -121,11 +125,19 @@ public class Host {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Host host = (Host) o;
-        return Objects.equals(id, host.id) && Objects.equals(companyName, host.companyName) && Objects.equals(nipNumber, host.nipNumber) && Objects.equals(regonNumber, host.regonNumber) && Objects.equals(email, host.email) && Objects.equals(phoneNumber, host.phoneNumber) && Objects.equals(registrationDate, host.registrationDate) && Objects.equals(properties, host.properties);
+        return Objects.equals(id, host.id) && Objects.equals(companyName, host.companyName)
+                && Objects.equals(nipNumber, host.nipNumber) && Objects.equals(regonNumber, host.regonNumber)
+                && Objects.equals(email, host.email) && Objects.equals(phoneNumber, host.phoneNumber)
+                && Objects.equals(registrationDate, host.registrationDate)
+                && Objects.equals(properties, host.properties);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, companyName, nipNumber, regonNumber, email, phoneNumber, registrationDate, properties);
+    }
+
+    public boolean isAnyHostFieldNull() {
+        return Stream.of(companyName, email, phoneNumber).anyMatch(Objects::isNull);
     }
 }

@@ -12,8 +12,8 @@ public class CommentDTOMapper implements DTOMapper<Comment, CommentDTO> {
                 .author(from.getAuthor().getName() + " " + from.getAuthor().getLastName())
                 .propertyName(from.getProperty().getPropertyName())
                 .content(from.getContent())
-                .rating(from.getRating())
-                .creationDate(from.getCreationDate())
+                .rating(String.valueOf(from.getRating()))
+                .creationDate(from.getCreationDate().toString())
                 .build();
         return commentDTO;
     }

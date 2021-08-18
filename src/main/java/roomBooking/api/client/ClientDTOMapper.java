@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ClientMapper implements DTOMapper<Client, ClientDTO> {
+public class ClientDTOMapper implements DTOMapper<Client, ClientDTO> {
 
-    private BookingDTOMapper bookingDTOMapper;
+    private final BookingDTOMapper bookingDTOMapper;
 
-    public ClientMapper(BookingDTOMapper bookingDTOMapper) {
+    public ClientDTOMapper(BookingDTOMapper bookingDTOMapper) {
         this.bookingDTOMapper = bookingDTOMapper;
     }
 
@@ -32,7 +32,7 @@ public class ClientMapper implements DTOMapper<Client, ClientDTO> {
                 .email(from.getEmail())
                 .phoneNumber(from.getPhoneNumber())
                 .nationality(from.getNationality())
-                .registrationDate(from.getRegistrationDate())
+                .registrationDate(from.getRegistrationDate().toString())
                 .bookings(bookings)
                 .build();
         return clientDTO;

@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AddressDTO {
 
-    @JsonProperty(value = "property_name")
-    private String property;
-
     @JsonProperty(value = "cuntry")
     private String country;
 
@@ -23,7 +20,6 @@ public class AddressDTO {
     private String houseNumber;
 
     public AddressDTO(AddressDTOBuilder b) {
-        this.property = b.property;
         this.country = b.country;
         this.city = b.city;
         this.postalCode = b.postalCode;
@@ -36,17 +32,11 @@ public class AddressDTO {
     }
 
     public static class AddressDTOBuilder {
-        private String property;
         private String country;
         private String city;
         private String postalCode;
         private String street;
         private String houseNumber;
-
-        public AddressDTOBuilder property(String property) {
-            this.property = property;
-            return this;
-        }
 
         public AddressDTOBuilder country(String country) {
             this.country = country;
@@ -78,10 +68,6 @@ public class AddressDTO {
         }
     }
 
-    public String getProperty() {
-        return property;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -105,8 +91,7 @@ public class AddressDTO {
     @Override
     public String toString() {
         return "AddressDTO{" +
-                "property=" + property +
-                ", country='" + country + '\'' +
+                "country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", street='" + street + '\'' +

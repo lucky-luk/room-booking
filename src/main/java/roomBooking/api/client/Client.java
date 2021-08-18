@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import roomBooking.api.booking.Booking;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "clients")
@@ -15,7 +16,6 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     @Column(name = "id")
     private Long id;
 
@@ -125,11 +125,19 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return Objects.equals(id, client.id) && Objects.equals(name, client.name) && Objects.equals(lastName, client.lastName) && Objects.equals(email, client.email) && Objects.equals(phoneNumber, client.phoneNumber) && Objects.equals(nationality, client.nationality) && Objects.equals(registrationDate, client.registrationDate) && Objects.equals(bookings, client.bookings);
+        return Objects.equals(id, client.id) && Objects.equals(name, client.name)
+                && Objects.equals(lastName, client.lastName) && Objects.equals(email, client.email)
+                && Objects.equals(phoneNumber, client.phoneNumber) && Objects.equals(nationality, client.nationality)
+                && Objects.equals(registrationDate, client.registrationDate)
+                && Objects.equals(bookings, client.bookings);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name, lastName, email, phoneNumber, nationality, registrationDate, bookings);
+    }
+
+    public boolean isAnyClientFieldNull() {
+        return Stream.of(name, lastName, email, phoneNumber, nationality).anyMatch(Objects::isNull);
     }
 }

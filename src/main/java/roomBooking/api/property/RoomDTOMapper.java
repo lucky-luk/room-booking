@@ -10,15 +10,14 @@ public class RoomDTOMapper implements DTOMapper<Room, RoomDTO> {
         RoomDTO roomDTO = RoomDTO
                 .builder()
                 .property(from.getProperty().getPropertyName())
-                .pricePerNight(from.getPricePerNight())
+                .pricePerNight(String.valueOf(from.getPricePerNight()))
                 .currency(from.getCurrency().name())
-                .sleepingPlaces(from.getSleepingPlaces())
-                .singleBed(from.isSingleBed())
-                .doubleBed(from.isDoubleBed())
-                .tvInRoom(from.isTvInRoom())
-                .privateKitchen(from.isPrivateKitchen())
-                .wifi(from.isWifi())
-                .isAvailable(from.getAvailable())
+                .sleepingPlaces(String.valueOf(from.getSleepingPlaces()))
+                .singleBed(String.valueOf(from.isSingleBed()))
+                .doubleBed(String.valueOf(from.isDoubleBed()))
+                .tvInRoom(String.valueOf(from.isTvInRoom()))
+                .privateKitchen(String.valueOf(from.isPrivateKitchen()))
+                .wifi(String.valueOf(from.isWifi()))
                 .build();
         return roomDTO;
     }

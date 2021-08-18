@@ -1,8 +1,11 @@
 package roomBooking.api.property;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "rooms")
@@ -13,21 +16,23 @@ public class Room {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
     @Column(name = "price_per_night", nullable = false)
     private BigDecimal pricePerNight;
 
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
-    @Column(name = "currency", nullable = false)
+    @Column(name = "currency")
     private Currency currency;
 
     @Column(name = "sleeping_places", nullable = false)
     private int sleepingPlaces;
 
-    @Column(name = "sinle_bed", nullable = false)
+    @Column(name = "single_bed", nullable = false)
     private boolean singleBed;
 
     @Column(name = "double_bed", nullable = false)
@@ -41,9 +46,6 @@ public class Room {
 
     @Column(name = "wifi", nullable = false)
     private boolean wifi;
-
-    @Column(name = "is_available")
-    private Boolean isAvailable;
 
     public Long getId() {
         return id;
@@ -125,14 +127,6 @@ public class Room {
         this.wifi = wifi;
     }
 
-    public Boolean getAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
-    }
-
     @Override
     public String toString() {
         return "Room{" +
@@ -146,7 +140,6 @@ public class Room {
                 ", tvInRoom=" + tvInRoom +
                 ", privateKitchen=" + privateKitchen +
                 ", wifi=" + wifi +
-                ", isAvailable=" + isAvailable +
                 '}';
     }
 
@@ -155,11 +148,21 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return sleepingPlaces == room.sleepingPlaces && singleBed == room.singleBed && doubleBed == room.doubleBed && tvInRoom == room.tvInRoom && privateKitchen == room.privateKitchen && wifi == room.wifi && Objects.equals(id, room.id) && Objects.equals(property, room.property) && Objects.equals(pricePerNight, room.pricePerNight) && currency == room.currency && Objects.equals(isAvailable, room.isAvailable);
+        return sleepingPlaces == room.sleepingPlaces && singleBed == room.singleBed
+                && doubleBed == room.doubleBed && tvInRoom == room.tvInRoom
+                && privateKitchen == room.privateKitchen && wifi == room.wifi
+                && Objects.equals(id, room.id) && Objects.equals(property, room.property)
+                && Objects.equals(pricePerNight, room.pricePerNight) && currency == room.currency;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, property, pricePerNight, currency, sleepingPlaces, singleBed, doubleBed, tvInRoom, privateKitchen, wifi, isAvailable);
+        return Objects.hash(id, property, pricePerNight, currency, sleepingPlaces, singleBed, doubleBed,
+                tvInRoom, privateKitchen, wifi);
+    }
+
+    public boolean isAnyRoomFieldNull() {
+        return Stream.of(pricePerNight, sleepingPlaces, singleBed,
+                doubleBed, tvInRoom, privateKitchen, wifi).anyMatch(Objects::isNull);
     }
 }

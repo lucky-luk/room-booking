@@ -9,7 +9,6 @@ public class AddressDTOMapper implements DTOMapper<Address, AddressDTO> {
     public AddressDTO from(Address from) {
         AddressDTO addressDTO = AddressDTO
                 .builder()
-                .property(from.getProperty().getPropertyName())
                 .country(from.getCountry())
                 .city(from.getCity())
                 .postalCode(from.getPostalCode())

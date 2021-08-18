@@ -14,7 +14,7 @@ public class PropertyDTO {
     private String propertyType;
 
     @JsonProperty(value = "number_of_rooms")
-    private int numberOfRooms;
+    private String numberOfRooms;
 
     @JsonProperty(value = "host_name")
     private String host;
@@ -23,16 +23,16 @@ public class PropertyDTO {
     private AddressDTO address;
 
     @JsonProperty(value = "parking_available")
-    private boolean parkingAvailable;
+    private String parkingAvailable;
 
     @JsonProperty(value = "restaurant_available")
-    private boolean restaurantAvailable;
+    private String restaurantAvailable;
 
     @JsonProperty(value = "swimming_pool_available")
-    private boolean swimmingPoolAvailable;
+    private String swimmingPoolAvailable;
 
     @JsonProperty("pets_allowed")
-    private boolean petsAllowed;
+    private String petsAllowed;
 
     @JsonProperty(value = "description")
     private String description;
@@ -65,13 +65,13 @@ public class PropertyDTO {
     public static class PropertyDTOBuilder {
         private String propertyName;
         private String propertyType;
-        private int numberOfRooms;
+        private String numberOfRooms;
         private String host;
         private AddressDTO address;
-        private boolean parkingAvailable;
-        private boolean restaurantAvailable;
-        private boolean swimmingPoolAvailable;
-        private boolean petsAllowed;
+        private String parkingAvailable;
+        private String restaurantAvailable;
+        private String swimmingPoolAvailable;
+        private String petsAllowed;
         private String description;
         private List<RoomDTO> rooms;
         private List<CommentDTO> comments;
@@ -86,7 +86,7 @@ public class PropertyDTO {
             return this;
         }
 
-        public PropertyDTOBuilder numberOfRooms(int numberOfRooms) {
+        public PropertyDTOBuilder numberOfRooms(String numberOfRooms) {
             this.numberOfRooms = numberOfRooms;
             return this;
         }
@@ -101,22 +101,22 @@ public class PropertyDTO {
             return this;
         }
 
-        public PropertyDTOBuilder parkingAvailable(boolean parkingAvailable) {
+        public PropertyDTOBuilder parkingAvailable(String parkingAvailable) {
             this.parkingAvailable = parkingAvailable;
             return this;
         }
 
-        public PropertyDTOBuilder restaurantAvailable(boolean restaurantAvailable) {
+        public PropertyDTOBuilder restaurantAvailable(String restaurantAvailable) {
             this.restaurantAvailable = restaurantAvailable;
             return this;
         }
 
-        public PropertyDTOBuilder swimmingPoolAvailable(boolean swimmingPoolAvailable) {
+        public PropertyDTOBuilder swimmingPoolAvailable(String swimmingPoolAvailable) {
             this.swimmingPoolAvailable = swimmingPoolAvailable;
             return this;
         }
 
-        public PropertyDTOBuilder petsAllowed(boolean petsAllowed) {
+        public PropertyDTOBuilder petsAllowed(String petsAllowed) {
             this.petsAllowed = petsAllowed;
             return this;
         }
@@ -149,7 +149,7 @@ public class PropertyDTO {
         return propertyType;
     }
 
-    public int getNumberOfRooms() {
+    public String getNumberOfRooms() {
         return numberOfRooms;
     }
 
@@ -161,19 +161,19 @@ public class PropertyDTO {
         return address;
     }
 
-    public boolean isParkingAvailable() {
+    public String isParkingAvailable() {
         return parkingAvailable;
     }
 
-    public boolean isRestaurantAvailable() {
+    public String isRestaurantAvailable() {
         return restaurantAvailable;
     }
 
-    public boolean isSwimmingPoolAvailable() {
+    public String isSwimmingPoolAvailable() {
         return swimmingPoolAvailable;
     }
 
-    public boolean isPetsAllowed() {
+    public String isPetsAllowed() {
         return petsAllowed;
     }
 

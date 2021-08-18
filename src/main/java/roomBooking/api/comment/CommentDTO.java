@@ -2,8 +2,6 @@ package roomBooking.api.comment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
-
 public class CommentDTO {
 
     @JsonProperty(value = "author")
@@ -16,17 +14,17 @@ public class CommentDTO {
     private String content;
 
     @JsonProperty(value = "rating")
-    private int rating;
+    private String rating;
 
     @JsonProperty(value = "creation_date")
-    private Date creationDate;
+    private String creationDate;
 
     public CommentDTO(CommentDTOBuilder b) {
-        this.author = author;
-        this.propertyName = propertyName;
-        this.content = content;
-        this.rating = rating;
-        this.creationDate = creationDate;
+        this.author = b.author;
+        this.propertyName = b.propertyName;
+        this.content = b.content;
+        this.rating = b.rating;
+        this.creationDate = b.creationDate;
     }
 
     public static CommentDTOBuilder builder() {
@@ -37,8 +35,8 @@ public class CommentDTO {
         private String author;
         private String propertyName;
         private String content;
-        private int rating;
-        private Date creationDate;
+        private String rating;
+        private String creationDate;
 
         public CommentDTOBuilder author(String author) {
             this.author = author;
@@ -55,12 +53,12 @@ public class CommentDTO {
             return this;
         }
 
-        public CommentDTOBuilder rating(int rating) {
+        public CommentDTOBuilder rating(String rating) {
             this.rating = rating;
             return this;
         }
 
-        public CommentDTOBuilder creationDate(Date creationDate) {
+        public CommentDTOBuilder creationDate(String creationDate) {
             this.creationDate = creationDate;
             return this;
         }
@@ -82,11 +80,11 @@ public class CommentDTO {
         return content;
     }
 
-    public int getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 

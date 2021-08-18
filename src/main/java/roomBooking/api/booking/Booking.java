@@ -1,15 +1,16 @@
 package roomBooking.api.booking;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import roomBooking.api.client.Client;
 import roomBooking.api.property.Currency;
 import roomBooking.api.property.Property;
 import roomBooking.api.property.Room;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "bookings")
@@ -20,15 +21,18 @@ public class Booking {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
@@ -38,21 +42,24 @@ public class Booking {
     @Column(name = "booking_to", nullable = false)
     private Date bookingTo;
 
-    @Formula(value = "DATEDIFF(booking_to, booking_from")
-    private int bookingDays;
+    @JsonIgnore
+    @Column(name = "booking_days")
+    private Long bookingDays;
 
+    @JsonIgnore
     @Column(name = "booking_cost")
     private BigDecimal bookingCost;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "currency")
+    @Column(name = "currency", nullable = false)
     private Currency currency;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method", nullable = false)
     private PaymentMethod paymentMethod;
 
-    @Column(name = "booking_date", nullable = false)
+    @JsonIgnore
+    @Column(name = "booking_date")
     private Date bookingDate;
 
     public Long getId() {
@@ -103,11 +110,11 @@ public class Booking {
         this.bookingTo = bookingTo;
     }
 
-    public int getBookingDays() {
+    public Long getBookingDays() {
         return bookingDays;
     }
 
-    public void setBookingDays(int bookingDays) {
+    public void setBookingDays(Long bookingDays) {
         this.bookingDays = bookingDays;
     }
 
@@ -165,11 +172,21 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return bookingDays == booking.bookingDays && Objects.equals(id, booking.id) && Objects.equals(client, booking.client) && Objects.equals(property, booking.property) && Objects.equals(room, booking.room) && Objects.equals(bookingFrom, booking.bookingFrom) && Objects.equals(bookingTo, booking.bookingTo) && Objects.equals(bookingCost, booking.bookingCost) && currency == booking.currency && paymentMethod == booking.paymentMethod && Objects.equals(bookingDate, booking.bookingDate);
+        return Objects.equals(id, booking.id) && Objects.equals(client, booking.client)
+                && Objects.equals(property, booking.property) && Objects.equals(room, booking.room)
+                && Objects.equals(bookingFrom, booking.bookingFrom) && Objects.equals(bookingTo, booking.bookingTo)
+                && Objects.equals(bookingDays, booking.bookingDays) && Objects.equals(bookingCost, booking.bookingCost)
+                && currency == booking.currency && paymentMethod == booking.paymentMethod
+                && Objects.equals(bookingDate, booking.bookingDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, client, property, room, bookingFrom, bookingTo, bookingDays, bookingCost, currency, paymentMethod, bookingDate);
+        return Objects.hash(id, client, property, room, bookingFrom, bookingTo, bookingDays, bookingCost,
+                currency, paymentMethod, bookingDate);
+    }
+
+    public boolean isAnyBookingFieldNull() {
+        return Stream.of(bookingFrom, bookingTo, currency, paymentMethod).anyMatch(Objects::isNull);
     }
 }

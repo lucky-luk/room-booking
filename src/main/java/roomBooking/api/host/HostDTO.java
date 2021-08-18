@@ -1,9 +1,8 @@
 package roomBooking.api.host;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import roomBooking.api.property.Property;
+import roomBooking.api.property.PropertyDTO;
 
-import java.util.Date;
 import java.util.List;
 
 public class HostDTO {
@@ -24,10 +23,10 @@ public class HostDTO {
     private String phoneNumber;
 
     @JsonProperty(value = "registration_date")
-    private Date registrationDate;
+    private String registrationDate;
 
     @JsonProperty(value = "properties")
-    private List<Property> properties;
+    private List<PropertyDTO> properties;
 
     public HostDTO(HostDTOBuilder b) {
         this.companyName = b.companyName;
@@ -49,8 +48,8 @@ public class HostDTO {
         private String regonNumber;
         private String email;
         private String phoneNumber;
-        private Date registrationDate;
-        private List<Property> properties;
+        private String registrationDate;
+        private List<PropertyDTO> properties;
 
         public HostDTOBuilder companyName(String companyName) {
             this.companyName = companyName;
@@ -77,12 +76,12 @@ public class HostDTO {
             return this;
         }
 
-        public HostDTOBuilder registrationDate(Date registrationDate) {
+        public HostDTOBuilder registrationDate(String registrationDate) {
             this.registrationDate = registrationDate;
             return this;
         }
 
-        public HostDTOBuilder properties(List<Property> properties) {
+        public HostDTOBuilder properties(List<PropertyDTO> properties) {
             this.properties = properties;
             return this;
         }
@@ -112,11 +111,11 @@ public class HostDTO {
         return phoneNumber;
     }
 
-    public Date getRegistrationDate() {
+    public String getRegistrationDate() {
         return registrationDate;
     }
 
-    public List<Property> getProperties() {
+    public List<PropertyDTO> getProperties() {
         return properties;
     }
 

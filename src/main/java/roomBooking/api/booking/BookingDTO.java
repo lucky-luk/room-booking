@@ -2,9 +2,6 @@ package roomBooking.api.booking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 public class BookingDTO {
 
     @JsonProperty(value = "client_name")
@@ -14,19 +11,19 @@ public class BookingDTO {
     private String propertyName;
 
     @JsonProperty(value = "room_id")
-    private Long roomId;
+    private String roomId;
 
     @JsonProperty(value = "booking_from")
-    private Date bookingFrom;
+    private String bookingFrom;
 
     @JsonProperty(value = "booking_to")
-    private Date bookingTo;
+    private String bookingTo;
 
     @JsonProperty(value = "booking_days")
-    private int bookingDays;
+    private String bookingDays;
 
     @JsonProperty(value = "booking_cost")
-    private BigDecimal bookingCost;
+    private String bookingCost;
 
     @JsonProperty(value = "currency")
     private String currency;
@@ -35,7 +32,7 @@ public class BookingDTO {
     private String paymentMethod;
 
     @JsonProperty(value = "booking_date")
-    private Date bookingDate;
+    private String bookingDate;
 
     public BookingDTO(BookingDTOBuilder b) {
         this.clientName = b.clientName;
@@ -57,14 +54,14 @@ public class BookingDTO {
     public static class BookingDTOBuilder {
         private String clientName;
         private String propertyName;
-        private Long roomId;
-        private Date bookingFrom;
-        private Date bookingTo;
-        private int bookingDays;
-        private BigDecimal bookingCost;
+        private String roomId;
+        private String bookingFrom;
+        private String bookingTo;
+        private String bookingDays;
+        private String bookingCost;
         private String currency;
         private String paymentMethod;
-        private Date bookingDate;
+        private String bookingDate;
 
         public BookingDTOBuilder clientName(String clientName) {
             this.clientName = clientName;
@@ -76,27 +73,27 @@ public class BookingDTO {
             return this;
         }
 
-        public BookingDTOBuilder roomId(Long roomId) {
+        public BookingDTOBuilder roomId(String roomId) {
             this.roomId = roomId;
             return this;
         }
 
-        public BookingDTOBuilder bookingFrom(Date bookingFrom) {
+        public BookingDTOBuilder bookingFrom(String bookingFrom) {
             this.bookingFrom = bookingFrom;
             return this;
         }
 
-        public BookingDTOBuilder bookingTo(Date bookingTo) {
+        public BookingDTOBuilder bookingTo(String bookingTo) {
             this.bookingTo = bookingTo;
             return this;
         }
 
-        public BookingDTOBuilder bookingDays(int bookingDays) {
+        public BookingDTOBuilder bookingDays(String bookingDays) {
             this.bookingDays = bookingDays;
             return this;
         }
 
-        public BookingDTOBuilder bookingCost(BigDecimal bookingCost) {
+        public BookingDTOBuilder bookingCost(String bookingCost) {
             this.bookingCost = bookingCost;
             return this;
         }
@@ -111,7 +108,7 @@ public class BookingDTO {
             return this;
         }
 
-        public BookingDTOBuilder bookingDate(Date bookingDate) {
+        public BookingDTOBuilder bookingDate(String bookingDate) {
             this.bookingDate = bookingDate;
             return this;
         }
@@ -129,23 +126,23 @@ public class BookingDTO {
         return propertyName;
     }
 
-    public Long getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
-    public Date getBookingFrom() {
+    public String getBookingFrom() {
         return bookingFrom;
     }
 
-    public Date getBookingTo() {
+    public String getBookingTo() {
         return bookingTo;
     }
 
-    public int getBookingDays() {
+    public String getBookingDays() {
         return bookingDays;
     }
 
-    public BigDecimal getBookingCost() {
+    public String getBookingCost() {
         return bookingCost;
     }
 
@@ -157,7 +154,7 @@ public class BookingDTO {
         return paymentMethod;
     }
 
-    public Date getBookingDate() {
+    public String getBookingDate() {
         return bookingDate;
     }
 
