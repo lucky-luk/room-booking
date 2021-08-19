@@ -69,20 +69,13 @@ public class PropertyRestController {
             if (propertyService.getPropertyById(id) == null) {
                 throw new PropertyNotFoundException("Property not found by id: " + id + ".");
             }
-            if (propertyService.deletePropertyById(id) > 0) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-            }
+            propertyService.deletePropertyById(id);
         } else {
             if (propertyService.getPropertyByName(propertyName) == null) {
                 throw new ClientNotFoundExceptions("Client not found by property name: " + propertyName + ".");
             }
-            if (propertyService.deletePropertyByName(propertyName) > 0) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-            }
+            propertyService.deletePropertyByName(propertyName);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

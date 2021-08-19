@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 @Component
 public class PropertyDTOMapper implements DTOMapper<Property, PropertyDTO> {
 
-    private AddressDTOMapper addressDTOMapper;
-    private RoomDTOMapper roomDTOMapper;
-    private CommentDTOMapper commentDTOMapper;
+    private final AddressDTOMapper addressDTOMapper;
+    private final RoomDTOMapper roomDTOMapper;
+    private final CommentDTOMapper commentDTOMapper;
 
     public PropertyDTOMapper(AddressDTOMapper addressDTOMapper, RoomDTOMapper roomDTOMapper, CommentDTOMapper commentDTOMapper) {
         this.addressDTOMapper = addressDTOMapper;

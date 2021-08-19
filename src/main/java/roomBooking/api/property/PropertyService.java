@@ -108,19 +108,23 @@ public class PropertyService {
     }
 
     @Transactional
-    public int deletePropertyById(Long id) {
+    public void deletePropertyById(Long id) {
         bookingRepository.deleteAllBookingsByPropertyId(id);
         roomRepository.deleteAllRoomsByPropertyId(id);
         commentRepository.deleteAllCommentsByPropertyId(id);
-        return propertyRepository.deletePropertyById(id);
+        Long addressId = getPropertyById(id).getAddress().getId();
+        propertyRepository.deletePropertyById(id);
+        propertyRepository.deleteAddressById(addressId);
     }
 
     @Transactional
-    public int deletePropertyByName(String propertyName) {
+    public void deletePropertyByName(String propertyName) {
         Long propertyId = getPropertyByName(propertyName).getId();
         bookingRepository.deleteAllBookingsByPropertyId(propertyId);
         roomRepository.deleteAllRoomsByPropertyId(propertyId);
         commentRepository.deleteAllCommentsByPropertyId(propertyId);
-        return propertyRepository.deletePropertyByName(propertyName);
+        Long addressId = getPropertyByName(propertyName).getAddress().getId();
+        propertyRepository.deletePropertyByName(propertyName);
+        propertyRepository.deleteAddressById(addressId);
     }
 }

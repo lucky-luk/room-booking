@@ -53,7 +53,7 @@ public class RoomRestController {
     public ResponseEntity<?> getRoomsDTO(@RequestParam(required = false) Long id,
                                          @RequestParam(required = false) Long propertyId,
                                          @RequestParam(required = false) Integer numberOfSleepingPlaces,
-                                         @RequestParam(required = false) boolean value,
+                                         @RequestParam(required = false) Boolean isDoubleBed,
                                          @RequestParam(required = false) BigDecimal min,
                                          @RequestParam(required = false) BigDecimal max) {
         if (id != null) {
@@ -65,8 +65,8 @@ public class RoomRestController {
         if (numberOfSleepingPlaces != null) {
             return new ResponseEntity<>(roomService.getAllRoomsDTOBySleepingPlaces(numberOfSleepingPlaces), HttpStatus.OK);
         }
-        if (value) {
-            return new ResponseEntity<>(roomService.getAllRoomsDTOWithDoubleBed(true), HttpStatus.OK);
+        if (isDoubleBed != null) {
+            return new ResponseEntity<>(roomService.getAllRoomsDTOWithDoubleBed(isDoubleBed), HttpStatus.OK);
         }
         if (min != null && max != null) {
             return new ResponseEntity<>(roomService.getAllRoomsDTOByMinMaxPrice(min, max), HttpStatus.OK);
@@ -75,7 +75,7 @@ public class RoomRestController {
     }
 
     @DeleteMapping("/rooms/delete")
-    public ResponseEntity<?> deleteProperty(@RequestParam(required = false) Long id,
+    public ResponseEntity<?> deleteRooms(@RequestParam(required = false) Long id,
                                             @RequestParam(required = false) Long propertyId) {
         if (id == null && propertyId == null) {
             throw new WrongParameterException("One of the parameters must be filled in.");

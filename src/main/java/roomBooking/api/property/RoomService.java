@@ -30,8 +30,10 @@ public class RoomService {
     }
 
     public Room createOrUpdateRoom(Room room, Long propertyId) {
-        if (!canRoomBeAdd(propertyId)) {
-            throw new MaxNumberOfRoomsException("Room cannot be add to property. Max number of rooms were added.");
+        if (room.getId() == null) {
+            if (!canRoomBeAdd(propertyId)) {
+                throw new MaxNumberOfRoomsException("Room cannot be add to property. Max number of rooms were added.");
+            }
         }
         room.setProperty(propertyService.getPropertyById(propertyId));
         room.setCurrency(Currency.PLN);
@@ -46,7 +48,11 @@ public class RoomService {
     }
 
     public Room getRoomById(Long id) {
-        return roomRepository.findById(id).orElse(null);
+        Room room = roomRepository.findById(id).orElse(null);
+        if (room == null) {
+            throw new RoomNotFoundException("Room not found by id: " + id + ".");
+        }
+        return room;
     }
 
     public RoomDTO getRoomDTOById(Long id) {

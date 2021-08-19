@@ -27,11 +27,11 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     @Modifying
     @Query(value = "delete from Property p where p.id = :id")
-    int deletePropertyById(Long id);
+    void deletePropertyById(Long id);
 
     @Modifying
     @Query(value = "delete from Property p where p.propertyName = :propertyName")
-    int deletePropertyByName(String propertyName);
+    void deletePropertyByName(String propertyName);
 
     @Modifying
     @Query(value = "delete from Address a where a.id = :addressId")
